@@ -1,0 +1,43 @@
+{
+  "charts": {
+    "activity": {
+      "title": "输入/输出趋势",
+      "data": [
+        { "name": "1月", "input": 400, "output": 240 },
+        { "name": "2月", "input": 300, "output": 139 },
+        { "name": "3月", "input": 200, "output": 580 },
+        { "name": "4月", "input": 278, "output": 390 },
+        { "name": "5月", "input": 189, "output": 480 },
+        { "name": "6月", "input": 239, "output": 380 }
+      ]
+    },
+    "skills": {
+      "title": "技能雷达",
+      "data": [
+        { "subject": "前端开发", "A": 120, "fullMark": 150 },
+        { "subject": "后端架构", "A": 98, "fullMark": 150 },
+        { "subject": "UI设计", "A": 86, "fullMark": 150 },
+        { "subject": "DevOps", "A": 99, "fullMark": 150 },
+        { "subject": "项目管理", "A": 85, "fullMark": 150 },
+        { "subject": "技术写作", "A": 65, "fullMark": 150 }
+      ]
+    }
+  },
+  "okrs": [
+    {
+      "id": 1,
+      "title": "Q2: 完成个人网站 2.0 版本迭代",
+      "progress": 80
+    },
+    {
+      "id": 2,
+      "title": "阅读 5 本技术书籍并输出笔记",
+      "progress": 40
+    },
+    {
+      "id": 3,
+      "title": "坚持每周运动 3 次",
+      "progress": 60
+    }
+  ]
+}

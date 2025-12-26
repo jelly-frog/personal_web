@@ -3,12 +3,15 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUIStore } from '@/store/uiStore';
+import { useTheme } from '@/hooks/useTheme';
+import { Sun, Moon } from 'lucide-react';
 
 const Header = () => {
   const location = useLocation();
   const [clickCount, setClickCount] = useState(0);
   const [showEgg, setShowEgg] = useState(false);
   const isScrolled = useUIStore((state) => state.isScrolled);
+  const { isDark, toggleTheme } = useTheme();
 
   const isHome = location.pathname === '/';
 
@@ -59,61 +62,84 @@ const Header = () => {
                    initial={{ x: -20, opacity: 0 }}
                    animate={{ x: 0, opacity: 1 }}
                    exit={{ x: -20, opacity: 0 }}
+                   transition={{ duration: 0.3, ease: "easeOut" }}
                    className="flex items-center"
                  >
                    <span className="text-2xl mr-2">🐸</span>
                  </motion.div>
               ) : (
                  // Initial State: Text Logo
-                 <motion.span
-                   key="text-logo"
-                   initial={{ x: 20, opacity: 0 }}
-                   animate={{ x: 0, opacity: 1 }}
-                   exit={{ x: -20, opacity: 0 }}
-                   className="text-white"
-                 >
-                   Jelly-Frog
-                 </motion.span>
+                <motion.span
+                  key="text-logo"
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: -20, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
+                >
+                  Jelly-Frog
+                </motion.span>
               )}
             </AnimatePresence>
           </div>
         </div>
 
-        <nav className="flex items-center gap-6">
-          {navItems.map((item) => (
-            <div key={item.path} className="flex items-center gap-2">
-              <Link
-                to={item.path}
-                className={cn(
-                  "text-sm font-medium transition-colors hover:text-primary",
-                  location.pathname === item.path 
-                    ? (isHome && !isScrolled ? "text-white font-bold" : "text-primary")
-                    : (isHome && !isScrolled ? "text-white/80" : "text-muted-foreground")
-                )}
-              >
-                {item.name}
-              </Link>
-              
-              {/* Avatar Docked in Header */}
-              {item.name === '我的' && (
-                (!isHome || isScrolled) && (
-                  <motion.div 
-                    layoutId="avatar-container"
-                    className="w-8 h-8 rounded-full overflow-hidden border-2 border-primary/20"
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        <nav className="flex items-center gap-6 relative">
+          <div className="flex items-center gap-6 overflow-hidden py-2">
+            <AnimatePresence mode="popLayout">
+              {navItems.map((item) => (
+                <motion.div 
+                  key={item.path} 
+                  layout="position"
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                >
+                  <Link
+                    to={item.path}
+                    className={cn(
+                      "text-sm font-medium transition-colors hover:text-primary drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] whitespace-nowrap",
+                      location.pathname === item.path 
+                        ? (isHome && !isScrolled ? "text-white font-bold" : "text-primary drop-shadow-none")
+                        : (isHome && !isScrolled ? "text-white hover:text-white" : "text-muted-foreground drop-shadow-none")
+                    )}
                   >
-                     <motion.img 
-                       layoutId="avatar-img"
-                       src="/avatar.png"
-                       onError={(e) => e.currentTarget.src = "https://ui-avatars.com/api/?name=Keroppi&background=8bc34a&color=fff"}
-                       alt="User" 
-                       className="w-full h-full object-cover" 
-                     />
-                  </motion.div>
-                )
-              )}
-            </div>
-          ))}
+                    {item.name}
+                  </Link>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+
+          {/* Avatar Docked in Header - Moved outside overflow-hidden container */}
+          <AnimatePresence>
+            {(!isHome || isScrolled) && (
+              <motion.div 
+                key="header-avatar"
+                layoutId="avatar-container"
+                className="w-8 h-8 rounded-full overflow-hidden border border-primary/20 bg-background flex-shrink-0"
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                style={{ borderRadius: '9999px', originX: 0, originY: 0 }}
+              >
+                  <motion.img 
+                    src="/avatar.png"
+                    onError={(e) => e.currentTarget.src = "https://ui-avatars.com/api/?name=Keroppi&background=8bc34a&color=fff"}
+                    alt="User" 
+                    className="w-full h-full object-cover block" 
+                  />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Theme Toggle Button */}
+          <button
+            onClick={toggleTheme}
+            className={cn(
+              "p-2 rounded-full transition-colors hover:bg-muted/20 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]",
+              isHome && !isScrolled ? "text-white hover:text-white" : "text-muted-foreground hover:text-foreground drop-shadow-none"
+            )}
+            aria-label="Toggle theme"
+          >
+            {isDark ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+          </button>
         </nav>
       </div>
       

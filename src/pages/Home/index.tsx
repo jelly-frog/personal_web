@@ -3,6 +3,7 @@ import { Search, Calculator, Image as ImageIcon, Globe, GraduationCap, Github, C
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import TodoWidget from '@/components/home/TodoWidget';
 import HitokotoWidget from '@/components/home/HitokotoWidget';
@@ -91,45 +92,57 @@ const HomePage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col transition-colors duration-300">
       {/* Hero Section */}
-      <div className="relative h-[400px] w-full overflow-hidden -mt-16 mb-8">
+      <div className="relative h-screen w-full overflow-hidden -mt-16 mb-8">
         {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center z-0"
           style={{ 
-            backgroundImage: `url('https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?q=80&w=2500&auto=format&fit=crop')`,
-            filter: 'brightness(0.7)'
+            backgroundImage: `url('/hero-bg.jpg')`,
+            filter: 'brightness(0.7) contrast(1.1)'
           }}
-        />
+        >
+          {/* Gradient Overlay for dark mode blending */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/90" />
+        </div>
         
-        {/* Central Avatar */}
+          {/* Central Avatar */}
         <div className="relative z-10 h-full flex flex-col items-center justify-center pt-16">
-           {!isScrolled && (
-             <motion.div 
+            {!isScrolled && (
+              <motion.div 
                 layoutId="avatar-container"
-                className="w-32 h-32 rounded-full overflow-hidden border-4 border-white/50 shadow-2xl"
+                className="w-32 h-32 rounded-full overflow-hidden border-4 border-white/50 shadow-2xl bg-white flex-shrink-0"
                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
-             >
-               <motion.img 
-                 layoutId="avatar-img"
-                 src="/avatar.png"
-                 onError={(e) => e.currentTarget.src = "https://ui-avatars.com/api/?name=Keroppi&background=8bc34a&color=fff"}
-                 alt="User" 
-                 className="w-full h-full object-cover" 
-               />
-             </motion.div>
-           )}
-           {!isScrolled && (
-             <motion.h1 
-               initial={{ opacity: 0, y: 20 }}
-               animate={{ opacity: 1, y: 0 }}
-               transition={{ delay: 0.2 }}
-               className="text-4xl font-bold text-white mt-6 shadow-sm"
-             >
-               Welcome to MySpace
-             </motion.h1>
-           )}
+                style={{ borderRadius: '9999px', originX: 0.5, originY: 0.5 }}
+              >
+                <motion.img 
+                  src="/avatar.png"
+                  onError={(e) => e.currentTarget.src = "https://ui-avatars.com/api/?name=Keroppi&background=8bc34a&color=fff"}
+                  alt="User" 
+                  className="w-full h-full object-cover block" 
+                />
+              </motion.div>
+            )}
+
+           <motion.h1 
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ delay: 0.2 }}
+             className="text-4xl font-bold text-white mt-6 shadow-sm"
+           >
+             Welcome to MySpace
+           </motion.h1>
+
+           {/* Scroll Down Indicator */}
+           <motion.div 
+             initial={{ opacity: 0 }}
+             animate={{ opacity: 1, y: [0, 10, 0] }}
+             transition={{ delay: 1, duration: 2, repeat: Infinity }}
+             className="absolute bottom-10 text-white/80"
+           >
+             <ChevronDown className="h-8 w-8" />
+           </motion.div>
         </div>
       </div>
 
@@ -264,11 +277,14 @@ const HomePage = () => {
                        transition={{ duration: 0.2 }}
                     >
                       <Card 
-                        className={`transition-all duration-300 border-l-4 ${isExpanded ? 'ring-2 ring-primary/20' : 'hover:shadow-md cursor-pointer'}`}
+                        className={`transition-all duration-300 border-l-4 ${isExpanded ? 'ring-2 ring-primary/20' : 'hover:shadow-md cursor-pointer flex flex-col justify-center min-h-[100px]'}`}
                         style={{ borderLeftColor: tool.color === 'blue' ? '#3b82f6' : '#a855f7' }}
                       >
                         <CardHeader 
-                          className="flex flex-row items-center justify-between space-y-0 pb-2 cursor-pointer"
+                          className={cn(
+                            "flex flex-row items-center justify-between space-y-0 cursor-pointer",
+                            isExpanded ? "pb-2" : "py-6"
+                          )}
                           onClick={() => toggleTool(toolId)}
                         >
                           <div className="space-y-1">
@@ -280,7 +296,7 @@ const HomePage = () => {
                               {tool.description}
                             </CardDescription>
                           </div>
-                          <Icon className="h-5 w-5 text-muted-foreground" />
+                          <Icon className={cn("h-6 w-6 text-muted-foreground transition-transform duration-300", isExpanded && "scale-110 text-primary")} />
                         </CardHeader>
                         <AnimatePresence>
                           {isExpanded && (

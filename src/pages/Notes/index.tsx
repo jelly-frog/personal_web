@@ -201,6 +201,11 @@ const NotesPage = () => {
   // Fetch post content when selected
   useEffect(() => {
     if (selectedPost) {
+      // Scroll to top when a new post is selected
+      if (contentRef.current) {
+        contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
       setLoading(true);
       fetch(`/posts/${selectedPost.filename}`)
         .then(res => res.text())

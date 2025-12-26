@@ -42,34 +42,37 @@
   }
  
   .dark {
-    /* Dark mode: #0d1b2a (213 53% 11%) */
-    --background: 213 53% 11%;
+    /* Dark mode optimized: Deep blue-grey background */
+    --background: 222 47% 11%; /* #0f172a - Slate 900 */
     --foreground: 210 40% 98%;
- 
-    /* Card: #1b263b (219 38% 17%) */
-    --card: 219 38% 17%;
+
+    /* Card: Slightly lighter than bg for depth */
+    --card: 217 33% 17%; /* #1e293b - Slate 800 */
     --card-foreground: 210 40% 98%;
- 
-    --popover: 219 38% 17%;
+
+    --popover: 217 33% 17%;
     --popover-foreground: 210 40% 98%;
- 
-    --primary: 142 70% 50%;
+
+    /* Primary: Bright emerald green for contrast */
+    --primary: 142 70% 50%; /* Emerald 500 */
     --primary-foreground: 144.9 80.4% 10%;
- 
-    --secondary: 217.2 32.6% 17.5%;
+
+    /* Secondary: Muted blue-grey */
+    --secondary: 215 28% 17%; /* Slate 800/900 mix */
     --secondary-foreground: 210 40% 98%;
- 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
- 
-    --accent: 217.2 32.6% 17.5%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20.2% 75%; /* Lighter text for better readability */
+
+    --accent: 217 33% 17%;
     --accent-foreground: 210 40% 98%;
- 
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
- 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
+
+    /* Border: Subtle separation */
+    --border: 217 33% 25%; /* Slate 700 */
+    --input: 217 33% 25%;
     --ring: 142 70% 50%;
   }
 }
