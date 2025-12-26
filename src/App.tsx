@@ -9,7 +9,7 @@ import { LayoutGroup } from "framer-motion";
 export default function App() {
   return (
     <LayoutGroup>
-      <Router>
+      <Router basename={import.meta.env.BASE_URL}>
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
