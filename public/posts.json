@@ -1,0 +1,20 @@
+[
+  {
+    "id": "hello-world",
+    "title": "Hello World - 第一篇笔记",
+    "date": "2024-05-20",
+    "category": "Web 开发",
+    "filename": "hello-world.md",
+    "summary": "这是我的第一篇测试笔记，包含代码和公式演示。",
+    "starred": true
+  },
+  {
+    "id": "power-electronics-basics",
+    "title": "电力电子基础概念",
+    "date": "2024-05-21",
+    "category": "电力电子",
+    "filename": "power-electronics.md",
+    "summary": "关于逆变器与整流器的基本原理简述。",
+    "starred": false
+  }
+]
